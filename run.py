@@ -4,7 +4,7 @@ import requests
 api_key = '30d4741c779ba94c470ca1f63045390a'
 
 city_input = input("Enter city: ")
-
+"""
 weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city_input}&units=imperial&APPID={api_key}").json()
 
 if weather_data['cod'] == '404':
@@ -29,5 +29,33 @@ else:
     print(f"The description in {city_input} is: {humidity}%")
     print(f"The sunrise in {city_input} is: {sunrise}")
     print(f"The sunset in {city_input} is: {sunset}")
+"""
 
+forecast_data = requests.get(f"https://api.openweathermap.org/data/2.5/forecast?q={city_input}&appid={api_key}").json()
 
+if forecast_data['cod'] == '404':
+        print("No City Found")
+else:
+    print(f"\n5-Day Weather Forecast for {city_input}:\n")
+    current_date = ""
+    for forecast in forecast_data['list']:
+        forecast_time = dt.datetime.fromtimestamp(forecast['dt'])
+        if forecast_time.date() != current_date:
+            current_date = forecast_time.date()
+            temp_kelvin = forecast['main']['temp']
+            temp_celsius = temp_kelvin - 273.15
+            temp_fahrenheit = temp_celsius * (9/5) + 32
+            feels_like_kelvin = forecast['main']['feels_like']
+            feels_like_celsius = feels_like_kelvin - 273.15
+            feels_like_fahrenheit = feels_like_celsius * (9/5) + 32
+            wind_speed = forecast['wind']['speed']
+            humidity = forecast['main']['humidity']
+            description = forecast['weather'][0]['description']
+
+            print(f"City: {city_input}")
+            print(f"Date: {current_date}")
+            print(f"- General Weather: {description.capitalize()}")
+            print(f"- Temperature: {temp_celsius:.2f}°C or {temp_fahrenheit:.2f}°F")
+            print(f"- Feels Like: {feels_like_celsius:.2f}°C or {feels_like_fahrenheit:.2f}°F")
+            print(f"- Humidity: {humidity}%")
+            print(f"- Wind Speed: {wind_speed} m/s\n")
