@@ -3,8 +3,8 @@ import requests
 
 api_key = '30d4741c779ba94c470ca1f63045390a'
 
+print("Welcome to the Weather App! This app will allow you to search for the weather in any city in the world.")
 while True:
-    print("Welcome to the Weather App! This app will allow you to search for the weather in any city in the world.")
     print("Press 1 for current weather\nPress 2 for 5 day forecast")
     choice = input("Enter your choice: ")
     while choice not in ['1', '2']:
@@ -26,8 +26,9 @@ while True:
                     wind_speed = round(weather_data['wind']['speed'])
                     humidity = weather_data['main']['humidity']
                     description = weather_data['weather'][0] ['description']
-                    sunrise = dt.datetime.fromtimestamp(weather_data['sys']['sunrise'])
-                    sunset = dt.datetime.fromtimestamp(weather_data['sys']['sunset'])
+                    timezone_offset = weather_data['timezone']
+                    sunrise = dt.datetime.fromtimestamp(weather_data['sys']['sunrise'] + timezone_offset)
+                    sunset = dt.datetime.fromtimestamp(weather_data['sys']['sunset'] + timezone_offset)
                     print(f"The weather in {city_input} is: {weather}")
                     print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC")
                     print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}ºC")
