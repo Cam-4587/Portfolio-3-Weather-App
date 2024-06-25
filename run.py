@@ -1,7 +1,8 @@
 import datetime as dt
 import requests
 
-api_key = '7081ca516f3263f1ef1b7cf00ee9cd26'
+api_key = open('api_key.txt', 'r').read()
+
 
 print("Welcome to the Weather App! This app will allow you to search for the weather in any city in the world.")
 while True:
