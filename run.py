@@ -3,7 +3,6 @@ import requests
 
 api_key = open('api_key.txt', 'r').read()
 
-
 print("Welcome to the Weather App! This app will allow you to search for the weather in any city in the world.")
 while True:
     print("Press 1 for current weather\nPress 2 for 5 day forecast")
@@ -27,17 +26,19 @@ while True:
                     wind_speed = round(weather_data['wind']['speed'])
                     humidity = weather_data['main']['humidity']
                     description = weather_data['weather'][0] ['description']
+                    rain = weather_data.get('rain', {'3h': 0})
                     timezone_offset = weather_data['timezone']
                     sunrise = dt.datetime.fromtimestamp(weather_data['sys']['sunrise'] + timezone_offset)
                     sunset = dt.datetime.fromtimestamp(weather_data['sys']['sunset'] + timezone_offset)
-                    print(f"The weather in {city_input} is: {weather}")
-                    print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC")
-                    print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}ºC")
-                    print(f"The wind speed in {city_input} is: {wind_speed} mph")
-                    print(f"The humidiy in {city_input} is: {humidity}%")
-                    print(f"The description in {city_input} is: {description}")
-                    print(f"The sunrise in {city_input} is: {sunrise}")
-                    print(f"The sunset in {city_input} is: {sunset}")
+                    print(f"The weather in {city_input} is: {weather}\n")
+                    print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC\n")
+                    print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}\n")
+                    print(f"The wind speed in {city_input} is: {wind_speed} mph\n")
+                    print(f"The humidiy in {city_input} is: {humidity}%\n")
+                    print(f"The description in {city_input} is: {description}\n")
+                    print(f"The sunrise in {city_input} is: {sunrise}\n")
+                    print(f"The sunset in {city_input} is: {sunset}\n")
+                    print(f"The current rainfall in {city_input} is: {rain.get('1h', 0)}mm\n")
         elif choice == '2':
                 city_input = input("Enter city: ")
                 forecast_data = requests.get(f"https://api.openweathermap.org/data/2.5/forecast?q={city_input}&appid={api_key}").json()
@@ -60,6 +61,7 @@ while True:
                             wind_speed = forecast['wind']['speed']
                             humidity = forecast['main']['humidity']
                             description = forecast['weather'][0]['description']
+                            rain = forecast.get('rain', 0)
 
                             print(f"City: {city_input}")
                             print(f"Date: {current_date}")
@@ -67,4 +69,6 @@ while True:
                             print(f"- Temperature: {temp_celsius:.2f}°C or {temp_fahrenheit:.2f}°F")
                             print(f"- Feels Like: {feels_like_celsius:.2f}°C or {feels_like_fahrenheit:.2f}°F")
                             print(f"- Humidity: {humidity}%")
-                            print(f"- Wind Speed: {wind_speed} m/s\n")
+                            print(f"- Wind Speed: {wind_speed} m/s")
+                            print(f"- Rainfall: {rain['3h']}mm")
+                            print("\n")
