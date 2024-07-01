@@ -1,1 +1,11 @@
-# Your requirements go here
+cattrs==23.2.3
+flatbuffers==24.3.25
+numpy==2.0.0
+openmeteo_requests==1.2.0
+openmeteo_sdk==1.11.8
+pandas==2.2.2
+pytz==2024.1
+requests-cache==1.2.1
+retry-requests==2.0.0
+tzdata==2024.1
+url-normalize==1.4.3
