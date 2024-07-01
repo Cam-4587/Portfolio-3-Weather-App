@@ -4,14 +4,15 @@ import datetime as dt
 import requests
 from retry_requests import retry
 import pandas as pd
+import re
 
 api_key = open('api_key.txt', 'r').read()
 
 print("Welcome to the Weather App! This app will allow you to search for the weather in any city in the world.")
 while True:
-    print("Press 1 for current weather\nPress 2 for 5 day forecast\nPress 3 for current Pollen data (data available in Europe as far eastwards as Armenia and including North Africa)")
+    print("Press 1 for current weather\nPress 2 for 5 day forecast\nPress 3 for current Pollen data (data available in Europe as far eastwards as Armenia and including North Africa)\nPress 4 for historical data going as far back as 1940")
     choice = input("Enter your choice: ")
-    while choice not in ['1', '2', '3']:
+    while choice not in ['1', '2', '3', '4']:
         print("Invalid choice. Please enter 1,2 or 3.")
         choice = input("Enter your choice: ")
     else:
@@ -128,3 +129,63 @@ while True:
                 print(f"Current mugwort pollen {current_mugwort_pollen} Grains/m³\n")
                 print(f"Current olive pollen {current_olive_pollen} Grains/m³\n")
                 print(f"Current ragweed pollen {current_ragweed_pollen} Grains/m³\n")
+        elif choice == '4':
+            cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
+            retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
+            openmeteo = openmeteo_requests.Client(session=retry_session)
+
+            while True:
+                city_name = input("Enter the city name: ")
+                url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={api_key}"
+                response = requests.get(url)
+                data = response.json()
+            
+                if response.status_code == 404 or not data:
+                    print("City not found. Please enter a valid city name.")
+                    continue
+                
+                if data:
+                    lat = data[0]['lat']
+                    lon = data[0]['lon']
+                    break
+            while True:
+                date = input("Enter a valid date format (YYYY-MM-DD): ")
+                if not re.match(r"^\d{4}-\d{2}-\d{2}$", date):
+                    print("Error: Invalid date format. Please try again.")
+                    continue
+                break
+            url = "https://archive-api.open-meteo.com/v1/archive"
+            params = {
+                "latitude": lat,
+                "longitude": lon,
+                "start_date": date,
+                "end_date": date,
+                "hourly": ["temperature_2m", "relative_humidity_2m", "rain", "snowfall", "visibility", "wind_speed_10m"]
+            }
+            responses = openmeteo.weather_api(url, params=params)
+            response = responses[0]
+
+            hourly = response.Hourly()
+            hourly_temperature_2m = hourly.Variables(0).ValuesAsNumpy()
+            hourly_relative_humidity_2m = hourly.Variables(1).ValuesAsNumpy()
+            hourly_rain = hourly.Variables(2).ValuesAsNumpy()
+            hourly_snowfall = hourly.Variables(3).ValuesAsNumpy()
+            hourly_wind_speed_10m = hourly.Variables(5).ValuesAsNumpy()
+
+            three_hourly_data = {"Date and time": pd.date_range(
+            start=pd.to_datetime(hourly.Time(), unit="s", utc=True),
+            end=pd.to_datetime(hourly.TimeEnd(), unit="s", utc=True),
+            freq=pd.Timedelta(hours=2),
+            inclusive="left")
+            }
+
+            three_hourly_data["Temperature °C"] = hourly_temperature_2m[::2] # Select every 3rd hour 
+            three_hourly_data["Relative humidity %"] = hourly_relative_humidity_2m[::2]
+            three_hourly_data["Rain mm"] = hourly_rain[::2]
+            three_hourly_data["Snowfall"] = hourly_snowfall [::2]
+            three_hourly_data["Wind speed kph"] = hourly_wind_speed_10m[::2]
+            three_hourly_dataframe = pd.DataFrame(data=three_hourly_data)
+
+            for index, row in three_hourly_dataframe.iterrows():
+                print(row.to_string())
+                print("\n")
