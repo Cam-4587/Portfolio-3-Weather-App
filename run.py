@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import openmeteo_requests
 import requests_cache
 import datetime as dt
@@ -6,9 +8,10 @@ from retry_requests import retry
 import pandas as pd
 import re
 
-api_key = open('api_key.txt', 'r').read()
+load_dotenv() 
+api_key = (os.getenv("API_KEY"))
 
-print("Welcome to the Weather App! This app will allow you to search for the weather in any city in the world.")
+print("Welcome to the Weather App! This app will allow you to search for the weather in any city in the world, and pollen data for selected cities.")
 while True:
     print("Press 1 for current weather\nPress 2 for 5 day forecast\nPress 3 for current Pollen data (data available in Europe as far eastwards as Armenia and including North Africa)\nPress 4 for historical data going as far back as 1940")
     choice = input("Enter your choice: ")
