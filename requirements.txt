@@ -9,4 +9,4 @@ requests-cache==1.2.1
 retry-requests==2.0.0
 tzdata==2024.1
 url-normalize==1.4.3
-python-detonv==1.0.1
+python-dotenv==0.21.0
