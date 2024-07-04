@@ -31,12 +31,12 @@ while True:
     else:
         if choice == '1':
             # Get the current weather for a city
-                city_input = input("Enter city: " "\n")
+                city_input = input("Enter city: ")
                 weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city_input}&units=imperial&APPID={api_key}").json()
              # Check if the city was found   
                 if weather_data['cod'] == '404':
                         print("No City Found") 
-                        city_input = input("Enter city: " "\n")
+                        city_input = input("Enter city: ")
             # Extract the current weather data for that city
                 else:
                     weather = weather_data['weather'][0]['main']
@@ -52,7 +52,7 @@ while True:
                     sunrise = dt.datetime.fromtimestamp(weather_data['sys']['sunrise'] + timezone_offset)
                     sunset = dt.datetime.fromtimestamp(weather_data['sys']['sunset'] + timezone_offset)
                 # Print the weather data for that city
-                    print(f"The weather in {city_input} is: {weather}\n")
+                    print(f"\nThe weather in {city_input} is: {weather}\n")
                     print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC\n")
                     print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}ºC\n")
                     print(f"The wind speed in {city_input} is: {wind_speed} mph\n")
