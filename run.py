@@ -8,23 +8,36 @@ from retry_requests import retry
 import pandas as pd
 import re
 
+#Load environment variables from .env file
 load_dotenv() 
 api_key = (os.getenv("API_KEY"))
 
+#Print welcome message to the user
 print("Welcome to the Weather App! This app will allow you to search for the weather in any city in the world, and pollen data for selected cities.")
+
+#Start an infiinite loop to keep the program running
 while True:
+    # Print the options for the user
     print("Press 1 for current weather\nPress 2 for 5 day forecast\nPress 3 for current Pollen data (data available in Europe as far eastwards as Armenia and including North Africa)\nPress 4 for historical data going as far back as 1940")
+    
+    # Get the user's choice
     choice = input("Enter your choice: ")
+
+    #validate the user's choice
     while choice not in ['1', '2', '3', '4']:
         print("Invalid choice. Please enter 1,2 or 3.")
         choice = input("Enter your choice: ")
+    #handle the user's choice
     else:
         if choice == '1':
+            # Get the current weather for a city
                 city_input = input("Enter city: ")
                 weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city_input}&units=imperial&APPID={api_key}").json()
+             # Check if the city was found   
                 if weather_data['cod'] == '404':
                         print("No City Found") 
                         city_input = input("Enter city: ")
+            # Extract the current weather data for that city
                 else:
                     weather = weather_data['weather'][0]['main']
                     temp = round(weather_data['main']['temp'])
@@ -38,6 +51,7 @@ while True:
                     timezone_offset = weather_data['timezone']
                     sunrise = dt.datetime.fromtimestamp(weather_data['sys']['sunrise'] + timezone_offset)
                     sunset = dt.datetime.fromtimestamp(weather_data['sys']['sunset'] + timezone_offset)
+                # Print the weather data for that city
                     print(f"The weather in {city_input} is: {weather}\n")
                     print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC\n")
                     print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}ºC\n")
@@ -48,11 +62,15 @@ while True:
                     print(f"The sunset in {city_input} is: {sunset}\n")
                     print(f"The current rainfall in {city_input} is: {rain.get('1h', 0)}mm\n")
         elif choice == '2':
+            # Get the 5-day weather forecast for a city
                 city_input = input("Enter city: ")
                 forecast_data = requests.get(f"https://api.openweathermap.org/data/2.5/forecast?q={city_input}&appid={api_key}").json()
+                
+                #check if the city was found
                 if forecast_data['cod'] == '404':
                         print("No City Found")
                         city_input = input("Enter city: ")
+            # Extract the 5 day weather forecast data for that city
                 else:
                     print(f"\n5-Day Weather Forecast for {city_input}:\n")
                     current_date = ""
@@ -70,7 +88,7 @@ while True:
                             humidity = forecast['main']['humidity']
                             description = forecast['weather'][0]['description']
                             rain = forecast.get('rain', {}).get ('3h', 0)
-
+                        # print the 5 day weather forecast for that city
                             print(f"City: {city_input}")
                             print(f"Date: {current_date}")
                             print(f"- General Weather: {description.capitalize()}")
@@ -81,28 +99,29 @@ while True:
                             print(f"- Rainfall: {rain}mm")
                             print("\n")
         elif choice == '3':
+            # Get current pollen data for a city
                 while True:
                     city_name = input("Enter the city name: ")
                     url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={api_key}"
                     response = requests.get(url)
                     data = response.json()
-
+            # Check if the city was found
                     if response.status_code == 404 or not data:
                         print("City not found. Please enter a valid city name.")
                         continue
 
-                    # Assuming API returns data, take the first result
+            # Extract latitude and longitued for the city
                     if data:
                         lat = data[0]['lat']
                         lon = data[0]['lon']
                         print(f"Latitude: {lat}, Longitude: {lon}")
                         break
-
+            # Set up caching and retry mechanisms
                 cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
                 retry_session = retry(cache_session, retries = 5, backoff_factor = 0.2)
                 openmeteo = openmeteo_requests.Client(session = retry_session)
 
-
+            # Specifying the Parameters needed to make a request to the API that provides pollen data.
                 pollen_data = "https://air-quality-api.open-meteo.com/v1/air-quality"
                 params = {
                     "latitude": lat,
@@ -116,7 +135,7 @@ while True:
 
                 response = responses[0]
 
-
+            # Extract pollen data
                 current = response.Current()
                 current_alder_pollen = current.Variables(0).Value()
                 current_birch_pollen = current.Variables(1).Value()
@@ -124,7 +143,7 @@ while True:
                 current_mugwort_pollen = current.Variables(3).Value()
                 current_olive_pollen = current.Variables(4).Value()
                 current_ragweed_pollen = current.Variables(5).Value()
-
+            # Print pollen data and city name
                 print(f"\n{city_name}")
                 print(f"\nCurrent alder pollen {current_alder_pollen} Grains/m³\n")
                 print(f"Current birch pollen {current_birch_pollen} Grains/m³\n")
@@ -138,26 +157,31 @@ while True:
             openmeteo = openmeteo_requests.Client(session=retry_session)
 
             while True:
+            # Get historical weather data for a city
                 city_name = input("Enter the city name: ")
                 url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={api_key}"
                 response = requests.get(url)
                 data = response.json()
             
+            # Check if the city was found
                 if response.status_code == 404 or not data:
                     print("City not found. Please enter a valid city name.")
                     continue
-                
+            # Extract latitude and longitude for the city
                 if data:
                     lat = data[0]['lat']
                     lon = data[0]['lon']
                     break
             while True:
+            # Date input from the user
                 date = input("Enter a valid date format (YYYY-MM-DD): ")
+            # Date validation
                 if not re.match(r"^\d{4}-\d{2}-\d{2}$", date):
                     print("Error: Invalid date format. Please try again.")
                     continue
                 break
             url = "https://archive-api.open-meteo.com/v1/archive"
+            # Specifying the Parameters needed to make a request to the API that provides the historical data.
             params = {
                 "latitude": lat,
                 "longitude": lon,
@@ -165,9 +189,12 @@ while True:
                 "end_date": date,
                 "hourly": ["temperature_2m", "relative_humidity_2m", "rain", "snowfall", "visibility", "wind_speed_10m"]
             }
+
+            # Retrieve the weather data from the Open-Meteo API
             responses = openmeteo.weather_api(url, params=params)
             response = responses[0]
 
+            # Extract historical data
             hourly = response.Hourly()
             hourly_temperature_2m = hourly.Variables(0).ValuesAsNumpy()
             hourly_relative_humidity_2m = hourly.Variables(1).ValuesAsNumpy()
@@ -175,6 +202,7 @@ while True:
             hourly_snowfall = hourly.Variables(3).ValuesAsNumpy()
             hourly_wind_speed_10m = hourly.Variables(5).ValuesAsNumpy()
 
+            # Create a dictionary to store three-hourly data
             three_hourly_data = {"Date and time": pd.date_range(
             start=pd.to_datetime(hourly.Time(), unit="s", utc=True),
             end=pd.to_datetime(hourly.TimeEnd(), unit="s", utc=True),
@@ -182,13 +210,17 @@ while True:
             inclusive="left")
             }
 
+            # Populate the dictionary with data, selecting every 3rd hour
             three_hourly_data["Temperature °C"] = hourly_temperature_2m[::2] # Select every 3rd hour 
             three_hourly_data["Relative humidity %"] = hourly_relative_humidity_2m[::2]
             three_hourly_data["Rain mm"] = hourly_rain[::2]
             three_hourly_data["Snowfall"] = hourly_snowfall [::2]
             three_hourly_data["Wind speed kph"] = hourly_wind_speed_10m[::2]
+            
+            # Create a DataFrame from the dictionary
             three_hourly_dataframe = pd.DataFrame(data=three_hourly_data)
 
+            # Print the data row by row
             for index, row in three_hourly_dataframe.iterrows():
                 print(row.to_string())
                 print("\n")
