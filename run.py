@@ -18,7 +18,7 @@ print("Welcome to the Weather App! This app will allow you to search for the wea
 #Start an infiinite loop to keep the program running
 while True:
     # Print the options for the user
-    print("Press 1 for current weather\nPress 2 for 5 day forecast\nPress 3 for current Pollen data (data available in Europe as far eastwards as Armenia and including North Africa)\nPress 4 for historical data going as far back as 1940")
+    print("Press 1 for current weather\nPress 2 for 5 day forecast\nPress 3 for current Pollen data (data available in Europe as far eastwards as\nArmenia and including North Africa)\nPress 4 for historical data going as far back as 1940")
     
     # Get the user's choice
     choice = input("Enter your choice: ")
@@ -31,12 +31,12 @@ while True:
     else:
         if choice == '1':
             # Get the current weather for a city
-                city_input = input("Enter city: ")
+                city_input = input("Enter city: " "\n")
                 weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city_input}&units=imperial&APPID={api_key}").json()
              # Check if the city was found   
                 if weather_data['cod'] == '404':
                         print("No City Found") 
-                        city_input = input("Enter city: ")
+                        city_input = input("Enter city: " "\n")
             # Extract the current weather data for that city
                 else:
                     weather = weather_data['weather'][0]['main']
@@ -69,7 +69,7 @@ while True:
                 #check if the city was found
                 if forecast_data['cod'] == '404':
                         print("No City Found")
-                        city_input = input("Enter city: ")
+                        city_input = input("Enter city: " "\n")
             # Extract the 5 day weather forecast data for that city
                 else:
                     print(f"\n5-Day Weather Forecast for {city_input}:\n")
@@ -114,7 +114,8 @@ while True:
                     if data:
                         lat = data[0]['lat']
                         lon = data[0]['lon']
-                        print(f"Latitude: {lat}, Longitude: {lon}")
+                        #option for future users to print co-ordinates for cross-checking
+                        #print(f"Latitude: {lat}, Longitude: {lon}")
                         break
             # Set up caching and retry mechanisms
                 cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
@@ -171,6 +172,8 @@ while True:
                 if data:
                     lat = data[0]['lat']
                     lon = data[0]['lon']
+                    #option for future users to print co-ordinates for cross-checking
+                    #print(f"Latitude: {lat}, Longitude: {lon}")
                     break
             while True:
             # Date input from the user
