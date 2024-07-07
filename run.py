@@ -77,7 +77,10 @@ while True:
                 sunrise = dt.datetime.fromtimestamp(weather_data['sys']['sunrise'] + timezone_offset)
                 sunset = dt.datetime.fromtimestamp(weather_data['sys']['sunset'] + timezone_offset)
             # Print the weather data for that city
-                print(f"\nThe weather in {city_input} is: {weather}\n")
+                print("\n"*3)
+                print("-------------------------------------------------------")
+                print(f"The weather in {city_input} is: {weather}")
+                print("-------------------------------------------------------")
                 print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC\n")
                 print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}ºC\n")
                 print(f"The wind speed in {city_input} is: {wind_speed} mph\n")
@@ -86,6 +89,7 @@ while True:
                 print(f"The sunrise in {city_input} is: {sunrise}\n")
                 print(f"The sunset in {city_input} is: {sunset}\n")
                 print(f"The current rainfall in {city_input} is: {rain.get('1h', 0)}mm\n")
+                print("-------------------------------------------------------")
         elif choice == '2':
             # Get the 5-day weather forecast for a city
             while True:
@@ -119,7 +123,10 @@ while True:
                 city_input = input("Enter city: ")
             # Extract the 5 day weather forecast data for that city
             else:
-                print(f"\n5-Day Weather Forecast for {city_input}:\n")
+                print("\n"*3)
+                print("-------------------------------------------------------")
+                print(f"5-Day Weather Forecast for {city_input}:")
+                print("-------------------------------------------------------")
                 current_date = ""
                 for forecast in forecast_data['list']:
                     forecast_time = dt.datetime.fromtimestamp(forecast['dt'])
@@ -136,6 +143,7 @@ while True:
                         description = forecast['weather'][0]['description']
                         rain = forecast.get('rain', {}).get ('3h', 0)
                     # print the 5 day weather forecast for that city
+                        print("-------------------------------------------------------")
                         print(f"City: {city_input}")
                         print(f"Date: {current_date}")
                         print(f"- General Weather: {description.capitalize()}")
@@ -144,7 +152,7 @@ while True:
                         print(f"- Humidity: {humidity}%")
                         print(f"- Wind Speed: {wind_speed} m/s")
                         print(f"- Rainfall: {rain}mm")
-                        print("\n")
+                        print("-------------------------------------------------------")
         elif choice == '3':
             # Get current pollen data for a city
                 while True:
@@ -191,14 +199,18 @@ while True:
                 current_mugwort_pollen = current.Variables(3).Value()
                 current_olive_pollen = current.Variables(4).Value()
                 current_ragweed_pollen = current.Variables(5).Value()
-            # Print pollen data and city name
-                print(f"\n{city_name}")
-                print(f"\nCurrent alder pollen {current_alder_pollen} Grains/m³\n")
+                # Print pollen data and city name
+                print("\n"*3)
+                print("-------------------------------------------------------")
+                print(f"{city_name}")
+                print("-------------------------------------------------------")
+                print(f"Current alder pollen {current_alder_pollen} Grains/m³\n")
                 print(f"Current birch pollen {current_birch_pollen} Grains/m³\n")
                 print(f"Current grass pollen {current_grass_pollen} Grains/m³\n")
                 print(f"Current mugwort pollen {current_mugwort_pollen} Grains/m³\n")
                 print(f"Current olive pollen {current_olive_pollen} Grains/m³\n")
                 print(f"Current ragweed pollen {current_ragweed_pollen} Grains/m³\n")
+                print("-------------------------------------------------------")
         elif choice == '4':
             cache_session = requests_cache.CachedSession('.cache', expire_after=3600)
             retry_session = retry(cache_session, retries=5, backoff_factor=0.2)
@@ -271,10 +283,14 @@ while True:
             three_hourly_dataframe = pd.DataFrame(data=three_hourly_data)
 
             # Print the data row by row
+            print("\n"*3)
+            print("-------------------------------------------------------")
+            print(f"Historical Weather Data for {city_name} on {date}:")
+            print("-------------------------------------------------------")
             for index, row in three_hourly_dataframe.iterrows():
                 print(row.to_string())
-                print("\n")
-        # Ask the user if they would like to clear the console
+                print("-------------------------------------------------------")       
+            # Ask the user if they would like to clear the console
         clear_console = input("Would you like to clear the console? (yes/no): ").lower()
         if clear_console in ['yes', 'y']:
             clear()
