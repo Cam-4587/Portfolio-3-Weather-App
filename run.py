@@ -7,6 +7,7 @@ import requests
 from retry_requests import retry
 import pandas as pd
 import re
+from replit import clear
 
 #Load environment variables from .env file
 load_dotenv() 
@@ -273,3 +274,10 @@ while True:
             for index, row in three_hourly_dataframe.iterrows():
                 print(row.to_string())
                 print("\n")
+        # Ask the user if they would like to clear the console
+        clear_console = input("Would you like to clear the console? (yes/no): ").lower()
+        if clear_console in ['yes', 'y']:
+            clear()
+        while clear_console not in ['yes', 'no']:
+            print("Invalid input. Please enter 'yes' or 'no'.")
+            clear_console = input("Would you like to clear the console? (yes/no): ").lower()
