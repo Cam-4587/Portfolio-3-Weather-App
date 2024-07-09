@@ -48,48 +48,46 @@ while True:
                 url = f"http://api.openweathermap.org/geo/1.0/direct?q={country_input}&appid={api_key}"
                 response = requests.get(url)
                 geocoding_data = response.json()
-                if response.status_code == 404 or not geocoding_data:
+                if response.status_code == 404 or not geocoding_data or "":
                     print("Country not found. Please enter a valid country name.")
                     continue
 
                 country_code = geocoding_data[0]['country']
-                break
+                weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city_input},{country_code}&units=imperial&APPID={api_key}").json()
 
-            weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city_input},{country_code}&units=imperial&APPID={api_key}").json()
-
-            # Check if the city was found
-            if weather_data['cod'] == '404':
-                print("No City Found")
-                city_input = input("Enter city: ")
-
-            # Extract the current weather data for that city
-            else:
-                weather = weather_data['weather'][0]['main']
-                temp = round(weather_data['main']['temp'])
-                temp_celsius = round((temp-32) * 5.0/9.0)
-                feels_like_F = round(weather_data['main']['feels_like'])
-                feels_like_C = round((feels_like_F - 32) * 5.0/9.0)
-                wind_speed = round(weather_data['wind']['speed'])
-                humidity = weather_data['main']['humidity']
-                description = weather_data['weather'][0] ['description']
-                rain = weather_data.get('rain', {'3h': 0})
-                timezone_offset = weather_data['timezone']
-                sunrise = dt.datetime.fromtimestamp(weather_data['sys']['sunrise'] + timezone_offset)
-                sunset = dt.datetime.fromtimestamp(weather_data['sys']['sunset'] + timezone_offset)
-            # Print the weather data for that city
-                print("\n"*3)
-                print("-------------------------------------------------------")
-                print(f"The weather in {city_input} is: {weather}")
-                print("-------------------------------------------------------")
-                print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC\n")
-                print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}ºC\n")
-                print(f"The wind speed in {city_input} is: {wind_speed} mph\n")
-                print(f"The humidiy in {city_input} is: {humidity}%\n")
-                print(f"The description in {city_input} is: {description}\n")
-                print(f"The sunrise in {city_input} is: {sunrise}\n")
-                print(f"The sunset in {city_input} is: {sunset}\n")
-                print(f"The current rainfall in {city_input} is: {rain.get('1h', 0)}mm\n")
-                print("-------------------------------------------------------")
+                # Check if the city was found
+                if weather_data['cod'] == '404':
+                    print("No City Found")
+                    continue
+                # Extract the current weather data for that city
+                else:
+                    weather = weather_data['weather'][0]['main']
+                    temp = round(weather_data['main']['temp'])
+                    temp_celsius = round((temp-32) * 5.0/9.0)
+                    feels_like_F = round(weather_data['main']['feels_like'])
+                    feels_like_C = round((feels_like_F - 32) * 5.0/9.0)
+                    wind_speed = round(weather_data['wind']['speed'])
+                    humidity = weather_data['main']['humidity']
+                    description = weather_data['weather'][0] ['description']
+                    rain = weather_data.get('rain', {'3h': 0})
+                    timezone_offset = weather_data['timezone']
+                    sunrise = dt.datetime.fromtimestamp(weather_data['sys']['sunrise'] + timezone_offset)
+                    sunset = dt.datetime.fromtimestamp(weather_data['sys']['sunset'] + timezone_offset)
+                    # Print the weather data for that city
+                    print("\n"*3)
+                    print("-------------------------------------------------------")
+                    print(f"The weather in {city_input} is: {weather}")
+                    print("-------------------------------------------------------")
+                    print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC\n")
+                    print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}ºC\n")
+                    print(f"The wind speed in {city_input} is: {wind_speed} mph\n")
+                    print(f"The humidiy in {city_input} is: {humidity}%\n")
+                    print(f"The description in {city_input} is: {description}\n")
+                    print(f"The sunrise in {city_input} is: {sunrise}\n")
+                    print(f"The sunset in {city_input} is: {sunset}\n")
+                    print(f"The current rainfall in {city_input} is: {rain.get('1h', 0)}mm\n")
+                    print("-------------------------------------------------------")
+                    break
         elif choice == '2':
             # Get the 5-day weather forecast for a city
             while True:
@@ -113,46 +111,45 @@ while True:
                     continue
 
                 country_code = geocoding_data[0]['country']
+                forecast_data = requests.get(f"https://api.openweathermap.org/data/2.5/forecast?q={city_input},{country_code}&appid={api_key}").json()
+
+                # Check if the city was found
+                if forecast_data['cod'] == '404':
+                    print("No City Found")
+                    continue
+                # Extract the 5 day weather forecast data for that city
+                else:
+                    print("\n"*3)
+                    print("-------------------------------------------------------")
+                    print(f"5-Day Weather Forecast for {city_input}:")
+                    print("-------------------------------------------------------")
+                    current_date = ""
+                    for forecast in forecast_data['list']:
+                        forecast_time = dt.datetime.fromtimestamp(forecast['dt'])
+                        if forecast_time.date() != current_date:
+                            current_date = forecast_time.date()
+                            temp_kelvin = forecast['main']['temp']
+                            temp_celsius = temp_kelvin - 273.15
+                            temp_fahrenheit = temp_celsius * (9/5) + 32
+                            feels_like_kelvin = forecast['main']['feels_like']
+                            feels_like_celsius = feels_like_kelvin - 273.15
+                            feels_like_fahrenheit = feels_like_celsius * (9/5) + 32
+                            wind_speed = forecast['wind']['speed']
+                            humidity = forecast['main']['humidity']
+                            description = forecast['weather'][0]['description']
+                            rain = forecast.get('rain', {}).get ('3h', 0)
+                        # print the 5 day weather forecast for that city
+                            print("-------------------------------------------------------")
+                            print(f"City: {city_input}")
+                            print(f"Date: {current_date}")
+                            print(f"- General Weather: {description.capitalize()}")
+                            print(f"- Temperature: {temp_celsius:.2f}°C or {temp_fahrenheit:.2f}°F")
+                            print(f"- Feels Like: {feels_like_celsius:.2f}°C or {feels_like_fahrenheit:.2f}°F")
+                            print(f"- Humidity: {humidity}%")
+                            print(f"- Wind Speed: {wind_speed} m/s")
+                            print(f"- Rainfall: {rain}mm")
+                            print("-------------------------------------------------------")
                 break
-
-            forecast_data = requests.get(f"https://api.openweathermap.org/data/2.5/forecast?q={city_input},{country_code}&appid={api_key}").json()
-
-            # Check if the city was found
-            if forecast_data['cod'] == '404':
-                print("No City Found")
-                city_input = input("Enter city: ")
-            # Extract the 5 day weather forecast data for that city
-            else:
-                print("\n"*3)
-                print("-------------------------------------------------------")
-                print(f"5-Day Weather Forecast for {city_input}:")
-                print("-------------------------------------------------------")
-                current_date = ""
-                for forecast in forecast_data['list']:
-                    forecast_time = dt.datetime.fromtimestamp(forecast['dt'])
-                    if forecast_time.date() != current_date:
-                        current_date = forecast_time.date()
-                        temp_kelvin = forecast['main']['temp']
-                        temp_celsius = temp_kelvin - 273.15
-                        temp_fahrenheit = temp_celsius * (9/5) + 32
-                        feels_like_kelvin = forecast['main']['feels_like']
-                        feels_like_celsius = feels_like_kelvin - 273.15
-                        feels_like_fahrenheit = feels_like_celsius * (9/5) + 32
-                        wind_speed = forecast['wind']['speed']
-                        humidity = forecast['main']['humidity']
-                        description = forecast['weather'][0]['description']
-                        rain = forecast.get('rain', {}).get ('3h', 0)
-                    # print the 5 day weather forecast for that city
-                        print("-------------------------------------------------------")
-                        print(f"City: {city_input}")
-                        print(f"Date: {current_date}")
-                        print(f"- General Weather: {description.capitalize()}")
-                        print(f"- Temperature: {temp_celsius:.2f}°C or {temp_fahrenheit:.2f}°F")
-                        print(f"- Feels Like: {feels_like_celsius:.2f}°C or {feels_like_fahrenheit:.2f}°F")
-                        print(f"- Humidity: {humidity}%")
-                        print(f"- Wind Speed: {wind_speed} m/s")
-                        print(f"- Rainfall: {rain}mm")
-                        print("-------------------------------------------------------")
         elif choice == '3':
             # Get current pollen data for a city
                 while True:
@@ -297,3 +294,4 @@ while True:
         while clear_console not in ['yes', 'no']:
             print("Invalid input. Please enter 'yes' or 'no'.")
             clear_console = input("Would you like to clear the console? (yes/no): ").lower()
+        
