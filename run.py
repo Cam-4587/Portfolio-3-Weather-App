@@ -26,7 +26,7 @@ while True:
 
     #validate the user's choice
     while choice not in ['1', '2', '3', '4']:
-        print("Invalid choice. Please enter 1,2 or 3.")
+        print("Invalid choice. Please enter 1,2,3 or 4.")
         choice = input("Enter your choice: ")
     #handle the user's choice
     else:
@@ -36,23 +36,18 @@ while True:
                 city_input = input("Enter city: ")
                 country_input = input("Enter country: ")
 
-                # Validate city input
-                url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_input}&appid={api_key}"
+                # Validate city and country input
+                url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_input},{country_input}&appid={api_key}"
                 response = requests.get(url)
                 data = response.json()
                 if response.status_code == 404 or not data:
-                    print("City not found. Please enter a valid city name.")
+                    print("City not found. Please enter a valid city name and country.")
                     continue
+                
+                lat = data[0]['lat']
+                lon = data[0]['lon']
 
-                # Validate country input
-                url = f"http://api.openweathermap.org/geo/1.0/direct?q={country_input}&appid={api_key}"
-                response = requests.get(url)
-                geocoding_data = response.json()
-                if response.status_code == 404 or not geocoding_data or "":
-                    print("Country not found. Please enter a valid country name.")
-                    continue
-
-                country_code = geocoding_data[0]['country']
+                country_code = data[0]['country']
                 weather_data = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city_input},{country_code}&units=imperial&APPID={api_key}").json()
 
                 # Check if the city was found
@@ -78,6 +73,8 @@ while True:
                     print("-------------------------------------------------------")
                     print(f"The weather in {city_input} is: {weather}")
                     print("-------------------------------------------------------")
+                    #print(f"Latitude: {lat}, Longitude: {lon}")
+                    #print("-------------------------------------------------------")
                     print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC\n")
                     print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}ºC\n")
                     print(f"The wind speed in {city_input} is: {wind_speed} mph\n")
@@ -94,23 +91,18 @@ while True:
                 city_input = input("Enter city: ")
                 country_input = input("Enter country: ")
 
-                # Validate city input
-                url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_input}&appid={api_key}"
+                # Validate city and country input
+                url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_input},{country_input}&appid={api_key}"
                 response = requests.get(url)
                 data = response.json()
                 if response.status_code == 404 or not data:
                     print("City not found. Please enter a valid city name.")
                     continue
 
-                # Validate country input
-                url = f"http://api.openweathermap.org/geo/1.0/direct?q={country_input}&appid={api_key}"
-                response = requests.get(url)
-                geocoding_data = response.json()
-                if response.status_code == 404 or not geocoding_data:
-                    print("Country not found. Please enter a valid country name.")
-                    continue
+                lat = data[0]['lat']
+                lon = data[0]['lon']
 
-                country_code = geocoding_data[0]['country']
+                country_code = data[0]['country']
                 forecast_data = requests.get(f"https://api.openweathermap.org/data/2.5/forecast?q={city_input},{country_code}&appid={api_key}").json()
 
                 # Check if the city was found
@@ -123,6 +115,7 @@ while True:
                     print("-------------------------------------------------------")
                     print(f"5-Day Weather Forecast for {city_input}:")
                     print("-------------------------------------------------------")
+                    #print(f"Latitude: {lat}, Longitude: {lon}")
                     current_date = ""
                     for forecast in forecast_data['list']:
                         forecast_time = dt.datetime.fromtimestamp(forecast['dt'])
