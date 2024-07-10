@@ -79,8 +79,8 @@ while True:
                     print(f"The weather in {city_input} is: {weather}")
                     print("-------------------------------------------------------")
                     #option to print latitude and longitude for city
-                    print(f"Latitude: {lat}, Longitude: {lon}")
-                    print("-------------------------------------------------------")
+                    #print(f"Latitude: {lat}, Longitude: {lon}")
+                    #print("-------------------------------------------------------")
                     print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC\n")
                     print(f"The temperature feels like: {feels_like_F}ºF or {feels_like_C}ºC\n")
                     print(f"The wind speed in {city_input} is: {wind_speed} mph\n")
@@ -125,8 +125,8 @@ while True:
                     print("-------------------------------------------------------")
                     print(f"5-Day Weather Forecast for {city_input}:")
                     #option to print latitude and longitude for city
-                    print("-------------------------------------------------------")
-                    print(f"Latitude: {lat}, Longitude: {lon}")
+                    #print("-------------------------------------------------------")
+                    #print(f"Latitude: {lat}, Longitude: {lon}")
                     current_date = ""
                     for forecast in forecast_data['list']:
                         forecast_time = dt.datetime.fromtimestamp(forecast['dt'])
