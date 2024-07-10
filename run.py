@@ -73,6 +73,7 @@ while True:
                     print("-------------------------------------------------------")
                     print(f"The weather in {city_input} is: {weather}")
                     print("-------------------------------------------------------")
+                    #option to print latitude and longitude for city
                     #print(f"Latitude: {lat}, Longitude: {lon}")
                     #print("-------------------------------------------------------")
                     print(f"The temperature in {city_input} is: {temp}ºF or {temp_celsius}ºC\n")
@@ -114,7 +115,8 @@ while True:
                     print("\n"*3)
                     print("-------------------------------------------------------")
                     print(f"5-Day Weather Forecast for {city_input}:")
-                    print("-------------------------------------------------------")
+                    #option to print latitude and longitude for city
+                    #print("-------------------------------------------------------")
                     #print(f"Latitude: {lat}, Longitude: {lon}")
                     current_date = ""
                     for forecast in forecast_data['list']:
@@ -159,8 +161,6 @@ while True:
                     if data:
                         lat = data[0]['lat']
                         lon = data[0]['lon']
-                        #option for future users to print co-ordinates for cross-checking
-                        #print(f"Latitude: {lat}, Longitude: {lon}")
                         break
             # Set up caching and retry mechanisms
                 cache_session = requests_cache.CachedSession('.cache', expire_after = 3600)
@@ -193,6 +193,9 @@ while True:
                 print("\n"*3)
                 print("-------------------------------------------------------")
                 print(f"{city_name}")
+                #option for future users to print co-ordinates for cross-checking
+                #print("-------------------------------------------------------")
+                #print(f"Latitude: {lat}, Longitude: {lon}")
                 print("-------------------------------------------------------")
                 print(f"Current alder pollen {current_alder_pollen} Grains/m³\n")
                 print(f"Current birch pollen {current_birch_pollen} Grains/m³\n")
@@ -221,8 +224,6 @@ while True:
                 if data:
                     lat = data[0]['lat']
                     lon = data[0]['lon']
-                    #option for future users to print co-ordinates for cross-checking
-                    #print(f"Latitude: {lat}, Longitude: {lon}")
                     break
             while True:
             # Date input from the user
@@ -276,6 +277,9 @@ while True:
             print("\n"*3)
             print("-------------------------------------------------------")
             print(f"Historical Weather Data for {city_name} on {date}:")
+            #option for future users to print co-ordinates for cross-checking
+            #print("-------------------------------------------------------")
+            #print(f"Latitude: {lat}, Longitude: {lon}")
             print("-------------------------------------------------------")
             for index, row in three_hourly_dataframe.iterrows():
                 print(row.to_string())
