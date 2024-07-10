@@ -199,7 +199,7 @@ while True:
                 current_olive_pollen = current.Variables(4).Value()
                 current_ragweed_pollen = current.Variables(5).Value()
                 # Print pollen data and city name
-                print("\n"*3)
+                print("\n"*6)
                 print("-------------------------------------------------------")
                 print(f"{city_name}")
                 #option for future users to print co-ordinates for cross-checking
