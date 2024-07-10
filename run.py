@@ -265,22 +265,22 @@ while True:
             hourly_wind_speed_10m = hourly.Variables(5).ValuesAsNumpy()
 
             # Create a dictionary to store three-hourly data
-            three_hourly_data = {"Date and time": pd.date_range(
+            two_hourly_data = {"Date and time": pd.date_range(
             start=pd.to_datetime(hourly.Time(), unit="s", utc=True),
             end=pd.to_datetime(hourly.TimeEnd(), unit="s", utc=True),
             freq=pd.Timedelta(hours=2),
             inclusive="left")
             }
 
-            # Populate the dictionary with data, selecting every 3rd hour
-            three_hourly_data["Temperature °C"] = hourly_temperature_2m[::2] # Select every 3rd hour 
-            three_hourly_data["Relative humidity %"] = hourly_relative_humidity_2m[::2]
-            three_hourly_data["Rain mm"] = hourly_rain[::2]
-            three_hourly_data["Snowfall"] = hourly_snowfall [::2]
-            three_hourly_data["Wind speed kph"] = hourly_wind_speed_10m[::2]
+            # Populate the dictionary with data, selecting every 2nd hour
+            two_hourly_data["Temperature °C"] = hourly_temperature_2m[::2] # Select every 2nd hour 
+            two_hourly_data["Relative humidity %"] = hourly_relative_humidity_2m[::2]
+            two_hourly_data["Rain mm"] = hourly_rain[::2]
+            two_hourly_data["Snowfall"] = hourly_snowfall [::2]
+            two_hourly_data["Wind speed kph"] = hourly_wind_speed_10m[::2]
             
             # Create a DataFrame from the dictionary
-            three_hourly_dataframe = pd.DataFrame(data=three_hourly_data)
+            two_hourly_dataframe = pd.DataFrame(data=two_hourly_data)
 
             # Print the data row by row
             print("\n"*3)
@@ -290,7 +290,7 @@ while True:
             #print("-------------------------------------------------------")
             #print(f"Latitude: {lat}, Longitude: {lon}")
             print("-------------------------------------------------------")
-            for index, row in three_hourly_dataframe.iterrows():
+            for index, row in two_hourly_dataframe.iterrows():
                 print(row.to_string())
                 print("-------------------------------------------------------")       
             # Ask the user if they would like to clear the console
