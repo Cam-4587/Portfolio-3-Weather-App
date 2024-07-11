@@ -1,5 +1,4 @@
 import os
-import sys, subprocess
 from dotenv import load_dotenv
 import openmeteo_requests
 import requests_cache
@@ -8,6 +7,7 @@ import requests
 from retry_requests import retry
 import pandas as pd
 import re
+from replit import clear
 import pycountry
 
 #Load environment variables from .env file
@@ -296,7 +296,7 @@ while True:
             # Ask the user if they would like to clear the console
         clear_console = input("Would you like to clear the console? (yes/no): ").lower()
         if clear_console in ['yes', 'y']:       
-            subprocess.run('clear', shell=True)
+            clear()
         while clear_console not in ['yes', 'no']:
             print("Invalid input. Please enter 'yes' or 'no'.")
             clear_console = input("Would you like to clear the console? (yes/no): ").lower()
