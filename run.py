@@ -1,5 +1,5 @@
 import os
-from os import system, name
+import sys, subprocess
 from dotenv import load_dotenv
 import openmeteo_requests
 import requests_cache
@@ -296,10 +296,7 @@ while True:
             # Ask the user if they would like to clear the console
         clear_console = input("Would you like to clear the console? (yes/no): ").lower()
         if clear_console in ['yes', 'y']:       
-            if name == 'nt':
-                    _ = system('cls')
-            else:
-                _ = system('clear')
+            subprocess.run('clear', shell=True)
         while clear_console not in ['yes', 'no']:
             print("Invalid input. Please enter 'yes' or 'no'.")
             clear_console = input("Would you like to clear the console? (yes/no): ").lower()
