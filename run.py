@@ -158,6 +158,9 @@ while True:
             # Get current pollen data for a city
                 while True:
                     city_name = input("Enter the city name: ")
+                    if not city_name:  # Check if the input is empty 
+                        print("Input cannot be empty. Please enter a valid city name.")
+                        continue
                     url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={api_key}"
                     response = requests.get(url)
                     data = response.json()
@@ -221,6 +224,9 @@ while True:
             while True:
             # Get historical weather data for a city
                 city_name = input("Enter the city name: ")
+                if not city_name:  # Check if the input is empty
+                        print("Input cannot be empty. Please enter a valid city name.")
+                        continue
                 url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&appid={api_key}"
                 response = requests.get(url)
                 data = response.json()
