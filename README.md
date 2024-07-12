@@ -19,7 +19,7 @@
 - The user is presented with a line of text that tells the user that they can search for the weather in any city in the world and pollen data in select cities.
 - An input section is printed below giving the outlining the 4 options for the user with a line to enter their choice.
 
-![Introduction Menu](assets/images/intro_menu.png)
+![Introduction Menu](/assets/images/intro_menu.png)
 
 ---
 ### **Choice 1**
@@ -34,7 +34,7 @@ Choice 1 allows the user to input a city and the OpenWeatherMap API retrieves da
     - Sunrise and Sunset
     - Rain
 
-![output for choice 1 in the weather app for Dublin, Ireland](assets/images/choice_1_output.png)
+![output for choice 1 in the weather app for Dublin, Ireland](/assets/images/choice_1_output)
 
 ---
 ### **Choice 2**
@@ -47,7 +47,7 @@ Choice 2 allows the user to input a city and the OpenWeatherMap API to produce a
     - Weather description
     - rainfall
 
-![output for choice 2 in the weather app for Dublin, Ireland](assets/images/choice_2_output.png)  
+![output for choice 2 in the weather app for Dublin, Ireland](/assets/images/choice_2_output.png)  
 
 ---
 ### **Choice 3**
@@ -60,7 +60,7 @@ Choice 3 allows the user to input the city and the OpenWeatherMap API to get the
     - Olive pollen
     - Ragweed pollen
 
-![output for choice 3 in the weather app for Dublin, Ireland](assets/images/choice_3_output.png)  
+![output for choice 3 in the weather app for Dublin, Ireland](/assets/images/choice_3_output.png)  
 
 ---
 ### **Choice 4**
@@ -73,19 +73,19 @@ Choice 4 allows the user to input a city and the OpenWeatherMap API to get the c
     - Wind speed
 - The original API printed out printed out weather conditions for every hour but the code is altered so that it prints out the weather for every 3 hours.
 
-![output for choice 3 in the weather app for Dublin, Ireland](assets/images/choice_4_output.png)
+![output for choice 3 in the weather app for Dublin, Ireland](/assets/images/choice_4_output.png)
 
 ## Data validation
 
 ### Choices 1 and 2
 Data validation is added for choices 1 and 2 so that if an invalid value is inputed for the city input or the country output as well as if no input is entered for either then the user is prompted to enter the input for a city and country again.
 
-![Data validation for choices 1 and 2](assets/images/data_validation_choices_1_and_2.png)
+![Data validation for choices 1 and 2](/assets/images/data_validation_choices_1_and_2.png)
 
 ### Choices 3 and 4
  Data validation is added for choices 3 and 3 so that if an invalid value is inputed for the city or if no input is entered then the user is prompted to enter the input for a city and country again. For choice 4 if the user inputs a date that isn't in the correct date format or if nothing is entered then the user is prompted to enter the date again.
 
-![Data validation for choices 3 and 4](assets/images/data_validation_choices_3_and_4.png)
+![Data validation for choices 3 and 4](/assets/images/data_validation_choices_3_and_4.png)
 
 
 ## **Credits**
