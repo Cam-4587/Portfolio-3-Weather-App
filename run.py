@@ -100,7 +100,7 @@ while True:
                     print(f"The weather in {city_input} is: {weather}")
                     print("--------------------------------------------------")
                     """
-                    option to print latitude and longitude for city
+                    # option to print latitude and longitude for city
                     print(f"Latitude: {lat}, Longitude: {lon}")
                     print("--------------------------------------------------")
                     """
@@ -170,7 +170,7 @@ while True:
                     print("--------------------------------------------------")
                     print(f"5-Day Weather Forecast for {city_input}:")
                     """
-                    option to print latitude and longitude for city
+                    # option to print latitude and longitude for city
                     print("--------------------------------------------------")
                     print(f"Latitude: {lat}, Longitude: {lon}")
                    """
@@ -282,7 +282,7 @@ while True:
             print("-------------------------------------------------------")
             print(f"{city_name}")
             """
-            option for future users to print co-ordinates for cross-checking
+            # option for future users to print co-ordinates for cross-checking
             print("-------------------------------------------------------")
             print(f"Latitude: {lat}, Longitude: {lon}")
             """
@@ -411,7 +411,7 @@ while True:
             print("-------------------------------------------------------")
             print(f"Historical Weather Data for {city_name} on {date}:")
             """
-            option for future users to print co-ordinates for cross-checking
+            # option for future users to print co-ordinates for cross-checking
             print("-------------------------------------------------------")
             print(f"Latitude: {lat}, Longitude: {lon}")
             """
