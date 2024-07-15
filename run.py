@@ -342,12 +342,29 @@ while True:
                     break
             while True:
                 # Date input from the user
-                date = input("Enter a valid date format (YYYY-MM-DD): ")
-                # Date validation
-                if not re.match(r"^\d{4}-\d{2}-\d{2}$", date):
-                    print("Error: Invalid date format. Please try again.")
+                date = input(
+                    "Please enter a date in the format YYYY-MM-DD "
+                    "between 1940-01-01 and today: "
+                )
+                if not date:  # Check if the input is empty
+                    print(
+                        "Input cannot be empty. Enter a valid ."
+                    )
                     continue
-                break
+                # Check if the date is within
+                # the allowed range and in a valid format
+                try:
+                    date_obj = dt.datetime.strptime(date, '%Y-%m-%d')
+                    if date_obj < dt.datetime(1940, 1, 1) or \
+                       date_obj > dt.datetime.today():
+                        print(
+                            "Error: Date is out of allowed range (1940-01-01"
+                            " to current date). Please try again."
+                        )
+                        continue
+                    break
+                except ValueError:
+                    print("Error: Invalid date format. Please try again.")
             url = "https://archive-api.open-meteo.com/v1/archive"
             # Specifying the Parameters needed to make a request
             # to the API that provides the historical data.
