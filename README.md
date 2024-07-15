@@ -98,7 +98,7 @@ Data validation is added for choices 1 and 2 so that if an invalid value is inpu
 ![Data validation for choices 1 and 2](/assets/images/data_validation_choices_1_and_2.png)
 
 ### **Choices 3 and 4**
-Data validation is added for choices 3 and 3 so that if an invalid value is input for the city or if no input is entered, then the user is prompted to enter the input for the city again. For choice 4, if the user inputs a date that isn't in the correct date format or if nothing is entered, then the user is prompted to enter the date again.
+Data validation is added for choices 3 and 4 so that if an invalid value is input for the city or if no input is entered, then the user is prompted to enter the input for the city again. For choice 4, if the user inputs a date that isn't in the correct date format, nothing is entered or the date given is out of range, then the user is prompted to enter the date again.
 
 ![Data validation for choices 3 and 4](/assets/images/data_validation_choices_3_and_4.png)
 
