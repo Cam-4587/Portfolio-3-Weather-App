@@ -143,6 +143,12 @@ This page helped me import the right modules to run.py, add the API_KEY to the.e
 
 This Pycountry Git hub page helped me incorporate 'pycountry.countries.get()' into my code as well as using 'name = country' and the alpha_2 attribute so country codes can be used in API requests to make the request more specific for the user.
 
+
+[Clear console in python](https://ask.replit.com/t/clear-console-in-python/65265)
+
+This Replit Ask webpage showed me the clear function from the replit package that I have incorporated into my code to give the users the option to clear the console.
+
+#### **The Code institute team**
 The code institute Tutoring team helped me when my code wasn't being deployed on the Heroku mock terminal so that my code would be functional on the terminal with no errors.
 
 My code institute tutor for highlighting the error in the forecast data that lead to me adding the country inputs to my code, making the data requests more accurate for the user. Also for suggesting the clear console feature and printing dotted lines that have helped make the app for user friendly.
