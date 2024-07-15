@@ -118,6 +118,17 @@ My code has been put into the CI python Linter code validator and has returned n
 
 ![pep8ci python code validation](/assets/images/python_validation.png)
 
+## **Deployment**
+
+This project was deployed using Code Institue's mock terminal for Heroku.
+
+- Steps for deployment:
+    - Select create new app on Heroku.
+    - Enter the applications name and select Europe for the region then select create app.
+    - In the Settings tab, set the buildbacks to Python and NodeJs in that order.
+    - In Config Vars I added my api key and port 8000.
+    - in the Deploy tab, select Github for the deployment method and link the Heroku app to the Github repository.
+    - Select deploy branch under manual deploy.
 
 ## **Credits**
  [Weather API Tutorial in Python](https://www.youtube.com/watch?v=9P5MY_2i7K8)
