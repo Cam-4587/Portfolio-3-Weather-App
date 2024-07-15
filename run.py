@@ -343,12 +343,12 @@ while True:
             while True:
                 # Date input from the user
                 date = input(
-                    "Please enter a date in the format YYYY-MM-DD "
+                    "Please enter a date in the format YYYY-MM-DD\n"
                     "between 1940-01-01 and today: "
                 )
                 if not date:  # Check if the input is empty
                     print(
-                        "Input cannot be empty. Enter a valid ."
+                        "Input cannot be empty. Enter a valid date."
                     )
                     continue
                 # Check if the date is within
@@ -358,8 +358,7 @@ while True:
                     if date_obj < dt.datetime(1940, 1, 1) or \
                        date_obj > dt.datetime.today():
                         print(
-                            "Error: Date is out of allowed range (1940-01-01"
-                            " to current date). Please try again."
+                            "Error: Date is out of allowed range"
                         )
                         continue
                     break
