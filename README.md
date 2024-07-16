@@ -118,6 +118,42 @@ My code has been put into the CI python Linter code validator and has returned n
 
 ![pep8ci python code validation](/assets/images/python_validation.png)
 
+### **Data testing**
+These are five different data tests, testing its functionality and accuracy concerning the different inputs used in scenarios against the expected output.
+
+|Test Case|Description|Inputs|Expected Output|Result(Pass/Fail)|
+|---------|-----------|------|---------------|-----------------|
+|1|Current Weather(Valid input)|City: London, Country: UK|Current weather data for London, UK|Pass|
+|2|5-Day Forecast (Invalid City Input)|City: Invalid City, Country: UK|Error message indicating city not found |Pass|
+|3|Pollen Data (Valid Input)|City: Paris|Pollen data for Paris|Pass|
+|4|Historical Data (Valid Date Range)|City: Berlin, Date: 15/08/1990|Historical weather data for Berlin on 15/08/1990|Pass|
+|5|	Historical Data (Date Out of Range)|City: Rome, Date: 01/01/1930|Error message indicating date is out of range|Pass|
+
+---
+### Image of first test including both the output and corrosponding weather from the Met office
+---
+ ![1st data test image](/assets/images/data_testing_1.png)
+
+---
+### Image of the output from the second test
+---
+![2nd data test image](/assets/images/data_testing_2.png)
+---
+### Image of the output from the 3rd test compared to the pollen data from open meteo
+---
+![3rd data test image](/assets/images/data_testing_3.png)
+
+---
+ ### Image of the output from the 4th test with the data extracted from open meteo for comparison
+ [API call data for Berlin, 15/08/1990](https://archive-api.open-meteo.com/v1/archive?latitude=52.5244&longitude=13.4105&start_date=1990-08-15&end_date=1990-08-15&hourly=temperature_2m,relative_humidity_2m,rain,snowfall,wind_speed_10m)
+---
+![4th data test image](/assets/images/data_testing_4.png)
+
+---
+ ### Image of the output from the 5th test with the data extracted from open meteo for comparison
+---
+![5th data test image](/assets/images/data_testing_5.png)
+
 ## **Deployment**
 
 This project was deployed using Code Institue's mock terminal for Heroku.
