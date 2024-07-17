@@ -153,7 +153,7 @@ These are five different data tests, testing its functionality and accuracy conc
 |5|	Historical Data (Date Out of Range)|City: Rome, Date: 01/01/1930|Error message indicating date is out of range|Pass|
 
 ---
-### Image of first test including both the output and corrosponding weather from the Met office
+### Image of first test including both the output and corrosponding weather from timeanddate.com
 ---
  ![1st data test image](/assets/images/data_testing_1.png)
 
@@ -173,7 +173,7 @@ These are five different data tests, testing its functionality and accuracy conc
 ![4th data test image](/assets/images/data_testing_4.png)
 
 ---
- ### Image of the output from the 5th test with the data extracted from open meteo for comparison
+ ### Image of the output from the 5th test
 ---
 ![5th data test image](/assets/images/data_testing_5.png)
 
