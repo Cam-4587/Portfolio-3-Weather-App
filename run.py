@@ -47,7 +47,7 @@ while True:
                 country_code = pycountry.countries.get(name=country_input)
                 if country_code is None:
                     print(
-                        "Invalid country name.Enter a valid country name."
+                        "Invalid country name. Enter a valid country name."
                     )
                     continue
 
@@ -99,11 +99,6 @@ while True:
                     print("--------------------------------------------------")
                     print(f"The weather in {city_input} is: {weather}")
                     print("--------------------------------------------------")
-                    """
-                    # option to print latitude and longitude for city
-                    print(f"Latitude: {lat}, Longitude: {lon}")
-                    print("--------------------------------------------------")
-                    """
                     print(
                         f"The temperature in {city_input} is: {temp}ºF or "
                         f"{temp_celsius}ºC\n"
@@ -169,11 +164,6 @@ while True:
                     print("\n" * 3)
                     print("--------------------------------------------------")
                     print(f"5-Day Weather Forecast for {city_input}:")
-                    """
-                    # option to print latitude and longitude for city
-                    print("--------------------------------------------------")
-                    print(f"Latitude: {lat}, Longitude: {lon}")
-                   """
                     current_date = ""
                     for forecast in forecast_data["list"]:
                         forecast_time = dt.datetime.fromtimestamp(
@@ -281,11 +271,6 @@ while True:
             print("\n" * 6)
             print("-------------------------------------------------------")
             print(f"{city_name}")
-            """
-            # option for future users to print co-ordinates for cross-checking
-            print("-------------------------------------------------------")
-            print(f"Latitude: {lat}, Longitude: {lon}")
-            """
             print("-------------------------------------------------------")
             print(
                 f"Current alder pollen {current_alder_pollen} Grains/m³\n"
@@ -426,11 +411,6 @@ while True:
             print("\n" * 3)
             print("-------------------------------------------------------")
             print(f"Historical Weather Data for {city_name} on {date}:")
-            """
-            # option for future users to print co-ordinates for cross-checking
-            print("-------------------------------------------------------")
-            print(f"Latitude: {lat}, Longitude: {lon}")
-            """
             print("-------------------------------------------------------")
             for index, row in two_hourly_dataframe.iterrows():
                 print(row.to_string())

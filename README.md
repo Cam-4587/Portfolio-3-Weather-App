@@ -22,6 +22,10 @@ and used by the open meteo API to collect pollen data that is then printed out f
 - Choice 4 is the same as choice 3 but asks the user for a date in the yyyy-mm-dd format which is also used by the open meteo API to retrieve historical weather data.
 - At the bottom of the data is an option for the user clear the current console or not where the user has to input either 'yes' or 'no'. 
 
+## **Weather App WorkFlow**
+
+![Workflow for my Weather app Python code](/assets/images/workflow.png)
+
 ## **Features**
 ### **Introduction menu**
 ---
@@ -108,9 +112,6 @@ Data validation is added for choices 3 and 4 so that if an invalid value is inpu
 The option to clear the console at the end of each data output has data validation making sure that if don't input a yes or no value or leave the input blank then the user user will be asked again to input either yes or no.
 
 ![Data validation clearing the console](/assets/images/console_clear_data_validation.png)
-
-### **Option to print out co-ordinates for inputed city** 
-Within the Python code there are commented out sections in all four choices giving devlopers the option to print out the latitude and longitude for any of the 4 choices which can be used for cross checking their inputs to see if the data being outputed is from the city they intended to look up.  
 
 ### **Python data validation**
 
