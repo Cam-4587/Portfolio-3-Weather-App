@@ -6,6 +6,28 @@
 
 ![image from the website I am responsive of the weather app website](/assets/images/am_i_responsive_image.png)
 
+## **Contents**
+
+ * [User Stories](#user-stories)
+ * [How to user the App](#how-to-use-the-app)
+ * [Weather App Workflow](#weather-app-workflow)
+ * [Weather App Workflow](#weather-app-workflow)
+ * [Features](#features)
+    * [Introduction](#introduction-section)
+    * [Choice 1](#choice-1)
+    * [Choice 2](#choice-2)
+    * [Choice 3](#choice-3)
+    * [Choice 4](#choice-4)
+    * [Option to clear the console](#option-to-clear-console)
+* [Data Validation](#data-validation)
+    * [Choices 1 and 2](#choices-1-and-2)
+    * [Choices 3 and 4](#choices-3-and-4)
+    * [Clearing the console](#clearing-the-console)
+    * [Python data validation](#python-data-validation)
+* [Data Testing](#data-testing)
+* [Deployment](#deployment)
+* [Credits](#credits)
+* [Bugs](#bugs)
 ## **User Stories**
  - I want to be able to find the current weather and a 5 day weather forecast for my city or a city I might be travelling to.
  - I want to search for current pollen levels in my city or a city I am going to as I might have hayfever or respiratory ailments that are affected by pollen.
@@ -27,7 +49,7 @@ and used by the open meteo API to collect pollen data that is then printed out f
 ![Workflow for my Weather app Python code](/assets/images/workflow.png)
 
 ## **Features**
-### **Introduction menu**
+### **Introduction section**
 ---
 - The user is presented with a line of text that tells the user that they can search for the weather in any city in the world and pollen data in select cities.
 - An input section is printed below, outlining the four options for the user with a line to enter their choice.
