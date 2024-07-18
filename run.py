@@ -25,7 +25,7 @@ while True:
     # Print the options for the user
     print(
         "Press 1 for current weather\nPress 2 for 5 day forecast\nPress 3 for "
-        "current Pollen data (data available in Europe as far eastwards as "
+        "current Pollen data (data available in Europe as far eastwards as\n"
         "Armenia and including North Africa)\nPress 4 for historical data "
         "going as far back as 1940"
     )
