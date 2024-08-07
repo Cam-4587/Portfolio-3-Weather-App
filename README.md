@@ -2,7 +2,7 @@
 
 - The Weather App is an interactive weather app that runs on the Code Institute mock terminal on Heroku.
 - Users can choose from 4 options: The current weather, a 5 day weather forecast, current pollen data or historical weather data for a city on any particular day going back as far as 1940.
-- Here is the live version of my project. [The Weather app](https://portfolio-3-weather-app-996e7c78d65e.herokuapp.com/).
+- Here is the live version of my project. [The Weather app](https://portfolio-3-weather-app-9b60fdf60f3e.herokuapp.com/).
 
 ![image from the website I am responsive of the weather app website](/assets/images/am_i_responsive_image.png)
 
